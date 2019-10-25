@@ -21,6 +21,7 @@ gitea::lfs_enabled: false
 gitea::lfs_content_directory: '/opt/gitea/data/lfs'
 gitea::configuration_sections: {}
 gitea::manage_service: true
+gitea::manage_service_file: true
 gitea::service_template: 'gitea/systemd.erb'
 gitea::service_path: '/lib/systemd/system/gitea.service'
 gitea::service_provider: 'systemd'

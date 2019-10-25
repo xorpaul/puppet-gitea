@@ -91,6 +91,7 @@ class gitea::install (
   String $lfs_content_directory  = $gitea::lfs_content_directory,
 
   Boolean $manage_service        = $gitea::manage_service,
+  Boolean $manage_service_file   = $gitea::manage_service_file,
   String $service_template       = $gitea::service_template,
   String $service_path           = $gitea::service_path,
   String $service_provider       = $gitea::service_provider,
@@ -154,6 +155,13 @@ class gitea::install (
     }
 
     $source_url="${base_url}/${version}/gitea-${version}-${kernel_down}-${arch}"
+    $remote_file_notify = $manage_service ? {
+      true => [
+        Exec["permissions:${$installation_directory}/gitea"],
+        Service['gitea']
+      ],
+      default => Exec["permissions:${$installation_directory}/gitea"],
+    }
 
     remote_file { 'gitea':
       ensure        => $package_ensure,
@@ -162,10 +170,7 @@ class gitea::install (
       proxy         => $proxy,
       checksum      => $checksum,
       checksum_type => $checksum_type,
-      notify        => [
-        Exec["permissions:${$installation_directory}/gitea"],
-        Service['gitea']
-      ],
+      notify        => $remote_file_notify,
     }
   }
 
@@ -205,7 +210,7 @@ class gitea::install (
     refreshonly => true,
   }
 
-  if ($manage_service) {
+  if ($manage_service_file) {
     file { "service:${service_path}":
       path    => $service_path,
       content => template($service_template),

@@ -131,6 +131,7 @@ class gitea (
   Hash $configuration_sections,
 
   Boolean $manage_service,
+  Boolean $manage_service_file,
   String $service_template,
   String $service_path,
   String $service_provider,
