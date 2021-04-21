@@ -41,8 +41,8 @@ class gitea::user (
   String  $owner               = $gitea::owner,
   String  $group               = $gitea::group,
   Optional[String] $home       = $gitea::home,
-  Optional[Integer] $group_gid = undef,
-  Optional[Integer] $owner_uid = undef,
+  Optional[Integer] $group_gid = $gitea::group_gid,
+  Optional[Integer] $owner_uid = $gitea::owner_uid,
 ) {
 
   if ($manage_home) {
