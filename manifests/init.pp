@@ -114,6 +114,8 @@ class gitea (
   Boolean $manage_home,
   String $owner,
   String $group,
+  Optional[Integer] $group_gid,
+  Optional[Integer] $owner_uid,
   Optional[String] $home,
 
   Optional[String] $proxy,

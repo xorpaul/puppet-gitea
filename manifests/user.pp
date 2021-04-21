@@ -35,13 +35,15 @@
 # Copyright 2016-2019 Daniel S. Reichenbach <https://kogitoapp.com>
 #
 class gitea::user (
-  Boolean $manage_user   = $gitea::manage_user,
-  Boolean $manage_group  = $gitea::manage_group,
-  Boolean $manage_home   = $gitea::manage_home,
-  String  $owner         = $gitea::owner,
-  String  $group         = $gitea::group,
-  Optional[String] $home = $gitea::home,
-  ) {
+  Boolean $manage_user         = $gitea::manage_user,
+  Boolean $manage_group        = $gitea::manage_group,
+  Boolean $manage_home         = $gitea::manage_home,
+  String  $owner               = $gitea::owner,
+  String  $group               = $gitea::group,
+  Optional[String] $home       = $gitea::home,
+  Optional[Integer] $group_gid = undef,
+  Optional[Integer] $owner_uid = undef,
+) {
 
   if ($manage_home) {
     if $home == undef {
@@ -51,16 +53,18 @@ class gitea::user (
     }
   }
 
-  if ($manage_user) {
+  if ($manage_group) {
     group { $group:
       ensure => present,
       system => true,
+      gid    => $group_gid,
     }
   }
 
   if ($manage_user) {
     user { $owner:
       ensure     => present,
+      uid        => $owner_uid,
       gid        => $group,
       home       => $homedir,
       managehome => $manage_home,
