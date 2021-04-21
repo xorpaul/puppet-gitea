@@ -16,13 +16,19 @@
 # Should we manage provisioning the home directory? Default: true
 #
 # * `owner`
-# The user owning gitea and its' files. Default: 'git'
+# The user owning gitea and its files. Default: 'git'
 #
 # * `group`
-# The group owning gitea and its' files. Default: 'git'
+# The group owning gitea and its files. Default: 'git'
 #
 # * `home`
 # Qualified path to the users' home directory. Default: empty
+#
+# * `group_gid`
+# The gid of the group owning gitea and its files. Default: empty
+#
+# * `owner_uid`
+# The uid of the user owning gitea and its files. Default: empty
 #
 # Authors
 # -------

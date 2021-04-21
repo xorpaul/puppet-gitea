@@ -10,10 +10,10 @@
 # Decides if the `gitea` binary will be installed. Default: 'present'
 #
 # * `owner`
-# The user owning gitea and its' files. Default: 'git'
+# The user owning gitea and its files. Default: 'git'
 #
 # * `group`
-# The group owning gitea and its' files. Default: 'git'
+# The group owning gitea and its files. Default: 'git'
 #
 # * `proxy`
 # Download via specified proxy. Default: empty

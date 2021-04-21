@@ -7,6 +7,8 @@ gitea::manage_group: true
 gitea::manage_home: true
 gitea::owner: 'git'
 gitea::group: 'git'
+gitea::group_gid: ~
+gitea::owner_uid: ~
 gitea::home: ~
 gitea::proxy: ~
 gitea::base_url: 'https://dl.gitea.io/gitea'

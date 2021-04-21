@@ -10,10 +10,10 @@
 # INI style settings for configuring Gitea.
 #
 # * `owner`
-# The user owning gitea and its' files. Default: 'git'
+# The user owning gitea and its files. Default: 'git'
 #
 # * `group`
-# The group owning gitea and its' files. Default: 'git'
+# The group owning gitea and its files. Default: 'git'
 #
 # * `installation_directory`
 # Target directory to hold the gitea installation. Default: '/opt/gitea'
