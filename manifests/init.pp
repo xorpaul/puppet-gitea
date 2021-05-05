@@ -93,6 +93,9 @@
 # * `robots_txt`
 # Allows to provide a http://www.robotstxt.org/ file to restrict crawling.
 #
+# * `manage_install`
+# Makes it possible to skip gitea::install sub class entirely. Useful for active/passive DRBD HA setups.
+#
 # Examples
 # --------
 #
@@ -145,23 +148,53 @@ class gitea (
   String $service_provider,
   String $service_mode,
 
+  Boolean $manage_install = true,
+  Boolean $manage_config = true,
+
   String $robots_txt,
   ) {
 
   class { '::gitea::packages': }
   class { '::gitea::user': }
-  class { '::gitea::install': }
+  if $manage_install {
+    class { '::gitea::install': }
+  }
 
-  class { '::gitea::config': }
+  if $manage_config {
+    class { '::gitea::config': }
+  }
   class { '::gitea::service': }
 
   anchor { 'gitea::begin': }
   anchor { 'gitea::end': }
 
-  Anchor['gitea::begin']
-  -> Class['gitea::packages']
-  -> Class['gitea::user']
-  -> Class['gitea::install']
-  -> Class['gitea::config']
-  ~> Class['gitea::service']
+  if $manage_install {
+    if $manage_config {
+      Anchor['gitea::begin']
+      -> Class['gitea::packages']
+      -> Class['gitea::user']
+      -> Class['gitea::install']
+      -> Class['gitea::config']
+      ~> Class['gitea::service']
+    } else {
+      Anchor['gitea::begin']
+      -> Class['gitea::packages']
+      -> Class['gitea::user']
+      -> Class['gitea::install']
+      ~> Class['gitea::service']
+    }
+  } else {
+    if $manage_config {
+      Anchor['gitea::begin']
+      -> Class['gitea::packages']
+      -> Class['gitea::user']
+      -> Class['gitea::config']
+      ~> Class['gitea::service']
+    } else {
+      Anchor['gitea::begin']
+      -> Class['gitea::packages']
+      -> Class['gitea::user']
+      ~> Class['gitea::service']
+    }
+  }
 }
