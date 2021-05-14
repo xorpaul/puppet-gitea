@@ -151,6 +151,7 @@ class gitea (
   Boolean $manage_install = true,
   Boolean $manage_config = true,
 
+  Optional[String] $socket_run_dir = undef,
   String $robots_txt,
   ) {
 
