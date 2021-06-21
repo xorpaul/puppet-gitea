@@ -6,7 +6,7 @@ After=syslog.target network.target
 Type=simple
 WorkingDirectory=<%= @installation_directory %>
 # If using unix socket: Tells Systemd to create /run/gitea folder to home gitea.sock
-# Manual cration would vanish after reboot.
+# Manual creation would vanish after reboot.
 <%- if @socket_run_dir %>RuntimeDirectory=<%= @socket_run_dir -%><% end %>
 User=<%= @owner %>
 ExecStart=<%= @installation_directory %>/gitea web
