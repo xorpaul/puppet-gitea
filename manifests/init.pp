@@ -155,6 +155,9 @@ class gitea (
   String $robots_txt,
 ) {
 
+  notify { "gitea::manage_install: $gitea::manage_install": }
+  notify { "gitea::manage_config: $gitea::manage_config": }
+
   notify { "manage_install: $manage_install": }
   notify { "manage_config: $manage_config": }
 
