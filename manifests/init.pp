@@ -153,7 +153,10 @@ class gitea (
 
   Optional[String] $socket_run_dir = undef,
   String $robots_txt,
-  ) {
+) {
+
+  notify { "manage_install: $manage_install": }
+  notify { "manage_config: $manage_config": }
 
   class { '::gitea::packages': }
   class { '::gitea::user': }
