@@ -57,29 +57,57 @@ class gitea::config (
   String $lfs_content_directory  = $gitea::lfs_content_directory,
   Boolean $lfs_enabled           = $gitea::lfs_enabled,
   String $robots_txt             = $gitea::robots_txt,
-  ) {
+) {
 
-  $required_settings = {
-    '' => {
-      'RUN_USER' => $owner,
-    },
-    'repository' => {
-      'ROOT' => $repository_root,
-    },
-    'log' => {
-      'MODE' =>'file',
-      'ROOT_PATH' => $log_directory,
-    },
-    'attachment' => {
-      'ENABLE' => true,
-      'PATH' => $attachment_directory,
-    },
-    'server' => {
-      'LFS_START_SERVER' => $lfs_enabled,
-      'LFS_CONTENT_PATH' => $lfs_content_directory,
-    },
+
+  $cmp_version = regsubst($gitea::version, '\\.', '')
+  if $cmp_version < 120 {
+    $required_settings = {
+      '' => {
+        'RUN_USER' => $owner,
+      },
+      'repository' => {
+        'ROOT' => $repository_root,
+      },
+      'log' => {
+        'MODE' =>'file',
+        'ROOT_PATH' => $log_directory,
+      },
+      'attachment' => {
+        'ENABLE' => true,
+        'PATH' => $attachment_directory,
+      },
+      'server' => {
+        'LFS_START_SERVER' => $lfs_enabled,
+        'LFS_CONTENT_PATH' => $lfs_content_directory,
+      },
+    }
+
+  } else {
+    $required_settings = {
+      '' => {
+        'RUN_USER' => $owner,
+      },
+      'repository' => {
+        'ROOT' => $repository_root,
+      },
+      'log' => {
+        'MODE' =>'file',
+        'ROOT_PATH' => $log_directory,
+      },
+      'attachment' => {
+        'ENABLE' => true,
+        'PATH' => $attachment_directory,
+      },
+      'server' => {
+        'LFS_START_SERVER' => $lfs_enabled,
+        'LFS_CONTENT_PATH' => $lfs_content_directory,
+      },
+      'lfs' => {
+        'PATH' => $lfs_content_directory,
+      },
+    }
   }
-
   $gitea_configuration = {
     'path'    => "${installation_directory}/custom/conf/app.ini",
     'require' => File["${installation_directory}/custom/conf"],
