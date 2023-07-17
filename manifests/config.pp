@@ -60,7 +60,7 @@ class gitea::config (
 ) {
 
 
-  $cmp_version = versioncmp($gitea::version, '1.20.0')
+  $cmp_version = versioncmp($gitea::version, '1.20.0', true)
   if $cmp_version <= 0 {
     $required_settings = {
       '' => {
