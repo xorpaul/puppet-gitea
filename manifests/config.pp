@@ -62,7 +62,7 @@ class gitea::config (
 
   $cmp_version = versioncmp($gitea::version, '1.20', true)
   notify { "comparing ${gitea::version} with '1.20' results in ${cmp_version}": }
-  if $cmp_version <= 0 {
+  if $cmp_version < 0 {
     $required_settings = {
       '' => {
         'RUN_USER' => $owner,
