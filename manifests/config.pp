@@ -101,7 +101,6 @@ class gitea::config (
       },
       'server' => {
         'LFS_START_SERVER' => $lfs_enabled,
-        'LFS_CONTENT_PATH' => $lfs_content_directory,
       },
       'lfs' => {
         'PATH' => $lfs_content_directory,
