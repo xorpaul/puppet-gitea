@@ -155,45 +155,38 @@ class gitea (
   String $robots_txt,
 ) {
 
-  class { '::gitea::packages': }
-  class { '::gitea::user': }
+  contain gitea::packages
+  contain gitea::user
   if $manage_install {
-    class { '::gitea::install': }
+    contain gitea::install
   }
 
   if $manage_config {
-    class { '::gitea::config': }
+    contain gitea::config
   }
-  class { '::gitea::service': }
-
-  anchor { 'gitea::begin': }
-  anchor { 'gitea::end': }
+  contain gitea::service
 
   if $manage_install {
     if $manage_config {
-      Anchor['gitea::begin']
-      -> Class['gitea::packages']
+      Class['gitea::packages']
       -> Class['gitea::user']
       -> Class['gitea::install']
       -> Class['gitea::config']
       ~> Class['gitea::service']
     } else {
-      Anchor['gitea::begin']
-      -> Class['gitea::packages']
+      Class['gitea::packages']
       -> Class['gitea::user']
       -> Class['gitea::install']
       ~> Class['gitea::service']
     }
   } else {
     if $manage_config {
-      Anchor['gitea::begin']
-      -> Class['gitea::packages']
+      Class['gitea::packages']
       -> Class['gitea::user']
       -> Class['gitea::config']
       ~> Class['gitea::service']
     } else {
-      Anchor['gitea::begin']
-      -> Class['gitea::packages']
+      Class['gitea::packages']
       -> Class['gitea::user']
       ~> Class['gitea::service']
     }

@@ -51,12 +51,10 @@ class gitea::user (
   Optional[Integer] $owner_uid = $gitea::owner_uid,
 ) {
 
-  if ($manage_home) {
-    if $home == undef {
-      $homedir = "/home/${owner}"
-    } else {
-      $homedir = $home
-    }
+  if $home == undef {
+    $homedir = "/home/${owner}"
+  } else {
+    $homedir = $home
   }
 
   if ($manage_group) {

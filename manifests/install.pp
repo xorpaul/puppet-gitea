@@ -141,9 +141,9 @@ class gitea::install (
   }
 
   if ($package_ensure) {
-    $kernel_down=downcase($::kernel)
+    $kernel_down=downcase($facts['kernel'])
 
-    case $::architecture {
+    case $facts['architecture'] {
       /(x86_64)/: {
         $arch = 'amd64'
       }
@@ -151,17 +151,17 @@ class gitea::install (
         $arch = '386'
       }
       default: {
-        $arch = $::architecture
+        $arch = $facts['architecture']
       }
     }
 
     $source_url="${base_url}/${version}/gitea-${version}-${kernel_down}-${arch}"
     $remote_file_notify = $manage_service ? {
       true => [
-        Exec["permissions:${$installation_directory}/gitea"],
+        Exec["permissions:${installation_directory}/gitea"],
         Service['gitea']
       ],
-      default => Exec["permissions:${$installation_directory}/gitea"],
+      default => Exec["permissions:${installation_directory}/gitea"],
     }
 
     remote_file { 'gitea':
@@ -181,8 +181,8 @@ class gitea::install (
     refreshonly => true,
   }
 
-  exec { "permissions:${$installation_directory}/gitea":
-    command     => "chmod +x ${$installation_directory}/gitea",
+  exec { "permissions:${installation_directory}/gitea":
+    command     => "chmod +x ${installation_directory}/gitea",
     path        => '/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
     refreshonly => true,
   }
